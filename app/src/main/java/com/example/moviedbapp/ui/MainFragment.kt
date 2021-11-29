@@ -1,4 +1,4 @@
-package com.example.moviedbapp.ui.main
+package com.example.moviedbapp.ui
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -8,7 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.moviedbapp.databinding.MainFragmentBinding
-import com.example.moviedbapp.model.AppState
+import com.example.moviedbapp.viewmodel.AppState
+import com.example.moviedbapp.viewmodel.MainViewModel
 
 class MainFragment : Fragment() {
 

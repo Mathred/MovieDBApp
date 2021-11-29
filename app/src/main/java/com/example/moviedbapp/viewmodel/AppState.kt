@@ -1,4 +1,4 @@
-package com.example.moviedbapp.model
+package com.example.moviedbapp.viewmodel
 
 sealed class AppState<out T: Any> {
     data class Success<T: Any>(val data: T) : AppState<T>()
