@@ -6,12 +6,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.moviedbapp.R
 import com.example.moviedbapp.databinding.MainFragmentBinding
+import com.example.moviedbapp.extensions.openMovie
+import com.example.moviedbapp.extensions.showErrorLoadingDialog
+import com.example.moviedbapp.ui.rvadapter.MovieCategoryAdapter
 import com.example.moviedbapp.viewmodel.AppState
 import com.example.moviedbapp.viewmodel.MainViewModel
 
-class MainFragment : Fragment() {
+class MainFragment : Fragment(R.layout.main_fragment) {
 
     companion object {
         fun newInstance() = MainFragment()
@@ -21,39 +26,65 @@ class MainFragment : Fragment() {
     private var _binding: MainFragmentBinding? = null
     private val binding get() = _binding!!
 
+    private val onMovieClick = object : OnMovieClickListener {
+        override fun onMovieClick(id: Int) {
+            openMovie(id)
+        }
+    }
+
+    private val onShowMoreClick = object : OnShowMoreClickListener {
+        override fun onShowMoreClick(category: String) {
+            //TODO("Not yet implemented")
+        }
+    }
+
+    private val adapter by lazy {
+        MovieCategoryAdapter(requireContext(), onMovieClick, onShowMoreClick)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = MainFragmentBinding.inflate(inflater, container, false)
-        initVm()
-        initObservers()
-        requestData()
+        _binding = MainFragmentBinding.inflate(inflater, container, false).apply {
+            initVm()
+            initViews()
+            initObservers()
+            requestData()
+        }
         return binding.root
     }
 
-    private fun requestData() {
-        viewModel.getData()
+    private fun MainFragmentBinding.initVm() {
+        viewModel = ViewModelProvider(this@MainFragment)[MainViewModel::class.java]
     }
 
-    private fun initVm() {
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+    private fun MainFragmentBinding.initViews() {
+        mainRv.layoutManager =
+            LinearLayoutManager(this.root.context, LinearLayoutManager.VERTICAL, false)
+        mainRv.adapter = adapter
     }
 
-    private fun initObservers() {
+    private fun MainFragmentBinding.initObservers() {
         viewModel.liveData.observe(viewLifecycleOwner) {
             when (it) {
                 is AppState.Loading -> {
-                    Toast.makeText(context, "Loading", Toast.LENGTH_SHORT).show()
+                    progress.isVisible = true
                 }
                 is AppState.Error -> {
-                    Toast.makeText(context, it.error.localizedMessage, Toast.LENGTH_SHORT).show()
+                    progress.isVisible = false
+                    showErrorLoadingDialog(requireContext())
                 }
                 is AppState.Success -> {
-                    Toast.makeText(context, it.data.toString(), Toast.LENGTH_SHORT).show()
+                    progress.isVisible = false
+                    adapter.setData(it.data)
                 }
             }
         }
+    }
+
+    private fun MainFragmentBinding.requestData() {
+        viewModel.getData()
     }
 
     override fun onDestroyView() {
@@ -61,4 +92,8 @@ class MainFragment : Fragment() {
         _binding = null
     }
 
+    override fun onDestroy() {
+        adapter.removeClickListener()
+        super.onDestroy()
+    }
 }
