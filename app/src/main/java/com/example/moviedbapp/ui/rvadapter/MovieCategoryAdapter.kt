@@ -27,7 +27,7 @@ class MovieCategoryAdapter(
     fun setData(data: List<MovieCategoryData>) {
         notifyItemRangeRemoved(0,movieCategoriesData?.size?:1-1) //Crash fix https://stackoverflow.com/a/37050829
         movieCategoriesData = data
-        notifyItemRangeInserted(0, movieCategoriesData?.size?:1 - 1)
+        notifyItemRangeInserted(0, movieCategoriesData?.size?:1-1)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
