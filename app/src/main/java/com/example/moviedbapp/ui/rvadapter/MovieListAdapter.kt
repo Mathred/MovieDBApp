@@ -3,8 +3,10 @@ package com.example.moviedbapp.ui.rvadapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.example.moviedbapp.databinding.ItemMovieBinding
 import com.example.moviedbapp.databinding.ItemShowMoreCategoryBinding
+import com.example.moviedbapp.extensions.toImageUrl
 import com.example.moviedbapp.model.entities.MovieCategoryData
 import com.example.moviedbapp.model.entities.MovieListItem
 import com.example.moviedbapp.ui.OnMovieClickListener
@@ -19,7 +21,7 @@ class MovieListAdapter(
 
     inner class MovieVH(binding: ItemMovieBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        val name = binding.tvName
+        val name = binding.tvTitle
         val image = binding.ivMovie
         val card = binding.cvMovie
     }
@@ -53,9 +55,9 @@ class MovieListAdapter(
             if (holder is MovieVH) {
                 if (movieList?.getOrNull(position) is MovieListItem.MovieData) {
                     holder.name.text =
-                        (movieList?.getOrNull(position) as MovieListItem.MovieData).name
-                    (movieList?.getOrNull(position) as MovieListItem.MovieData).image?.let {
-                        holder.image.setImageDrawable(it)
+                        (movieList?.getOrNull(position) as MovieListItem.MovieData).title
+                    (movieList?.getOrNull(position) as MovieListItem.MovieData).posterUrl?.let {
+                        holder.image.load(it.toImageUrl())
                     }
                     holder.card.setOnClickListener {
                         onMovieClick?.onMovieClick(

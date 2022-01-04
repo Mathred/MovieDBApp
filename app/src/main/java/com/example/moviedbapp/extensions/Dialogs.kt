@@ -26,12 +26,13 @@ fun showAlertDialog(
 }
 
 fun showErrorLoadingDialog(
-    context: Context
+    context: Context,
+    error: Throwable? = null
 ) {
     showAlertDialog(
         context,
         title = context.getString(R.string.error_loading_data_title),
-        message = context.getString(R.string.error_loading_data_message),
+        message = error?.localizedMessage ?: context.getString(R.string.error_loading_data_message),
         positiveButtonText = context.getString(R.string.error_loading_data_positive),
         positiveButtonListener = { dialog, _ -> dialog.dismiss() }
     )

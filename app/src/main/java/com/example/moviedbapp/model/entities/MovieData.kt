@@ -1,7 +1,5 @@
 package com.example.moviedbapp.model.entities
 
-import android.graphics.drawable.Drawable
-
 sealed class MovieListItem {
 
     data class ShowMoreButton(
@@ -10,7 +8,7 @@ sealed class MovieListItem {
 
     data class MovieData(
         val id: Int,
-        val name: String,
-        val image: Drawable? = null
+        val title: String,
+        val posterUrl: String? = null
     ) : MovieListItem()
 }
