@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import com.example.moviedbapp.ui.MovieDetailsFragment
 import com.example.moviedbapp.R
 import com.example.moviedbapp.ui.MainFragment
+import com.example.moviedbapp.ui.MovieHistoryFragment
 import com.example.moviedbapp.ui.SettingsFragment
 
 
@@ -50,6 +51,18 @@ fun AppCompatActivity.openSettings() {
             R.anim.exit_to_left,
         )
         .replace(R.id.container, SettingsFragment.newInstance())
+        .addToBackStack("")
+        .commit()
+}
+
+fun AppCompatActivity.openHistory() {
+    this.supportFragmentManager
+        .beginTransaction()
+        .setCustomAnimations(
+            R.anim.enter_from_right,
+            R.anim.exit_to_left,
+        )
+        .replace(R.id.container, MovieHistoryFragment.newInstance())
         .addToBackStack("")
         .commit()
 }

@@ -10,4 +10,12 @@
     <string name="setting_adult_content">Allow adult content</string>
     <string name="adult_movie">18+</string>
     <string name="setting_long_titles">Enable long titles</string>
+    <string name="btn_clear_history">Очистить историю</string>
+    <string name="menu_history">History</string>
+    <string name="btn_save_note">Сохранить заметку</string>
+    <string name="btn_reset_note">Отменить изменения</string>
+    <string name="btn_delete_note">Удалить заметку</string>
+    <string name="hint_add_note">Введите заметку</string>
+    <string name="toast_note_saved">Заметка сохранена</string>
+    <string name="toast_note_deleted">Заметка удалена</string>
 </resources>

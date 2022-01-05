@@ -10,5 +10,9 @@
             android:id="@+id/settings"
             android:icon="@drawable/ic_baseline_settings_24"
             android:title="@string/menu_item_settings" />
+        <item
+            android:id="@+id/history"
+            android:icon="@drawable/ic_baseline_history_24"
+            android:title="@string/menu_history" />
     </group>
 </menu>
