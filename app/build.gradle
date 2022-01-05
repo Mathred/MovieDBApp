@@ -72,4 +72,8 @@ dependencies {
     //Coil
     implementation 'io.coil-kt:coil:1.4.0'
     implementation 'io.coil-kt:coil-svg:1.4.0'
+
+    //Room
+    implementation 'androidx.room:room-runtime:2.4.0'
+    kapt 'androidx.room:room-compiler:2.4.0'
 }
