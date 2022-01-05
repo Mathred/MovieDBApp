@@ -4,4 +4,10 @@
     <string name="error_loading_data_message">При загрузке данных возникла ошибка</string>
     <string name="error_loading_data_positive">ОК</string>
     <string name="button_more">Eще</string>
+    <string name="top_app_bar">MovieDbApp</string>
+    <string name="menu_item_home">Home</string>
+    <string name="menu_item_settings">Settings</string>
+    <string name="setting_adult_content">Allow adult content</string>
+    <string name="adult_movie">18+</string>
+    <string name="setting_long_titles">Enable long titles</string>
 </resources>
