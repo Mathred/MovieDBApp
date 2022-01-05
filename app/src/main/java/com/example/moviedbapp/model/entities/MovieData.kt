@@ -8,6 +8,7 @@ sealed class MovieListItem {
 
     data class MovieData(
         val id: Int,
+        val adult: Boolean,
         val title: String,
         val posterUrl: String? = null
     ) : MovieListItem()

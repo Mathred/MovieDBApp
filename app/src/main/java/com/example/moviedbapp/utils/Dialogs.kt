@@ -1,4 +1,4 @@
-package com.example.moviedbapp.extensions
+package com.example.moviedbapp.utils
 
 import android.content.Context
 import android.content.DialogInterface

@@ -1,7 +1,6 @@
 package com.example.moviedbapp.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,7 @@ import coil.load
 import com.example.moviedbapp.MovieDbApp
 import com.example.moviedbapp.R
 import com.example.moviedbapp.databinding.FragmentMovieDetailsBinding
-import com.example.moviedbapp.extensions.showErrorLoadingDialog
+import com.example.moviedbapp.utils.showErrorLoadingDialog
 import com.example.moviedbapp.extensions.toImageUrl
 import com.example.moviedbapp.extensions.toSvgUrl
 import com.example.moviedbapp.viewmodel.AppState
@@ -57,7 +56,6 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
                     tvTitle.text = it.data.title
                     ivMovie.load(it.data.poster_path?.toImageUrl())
                     it.data.production_companies.getOrNull(0)?.logo_path?.let { logoPath ->
-                        Log.d("SAY", "logo_path = $logoPath, url = ${logoPath.toImageUrl()}, svgUrl = ${logoPath.toSvgUrl()}")
                         ivCompanyLogo.load(logoPath.toSvgUrl())
                     }
                 }

@@ -1,4 +1,4 @@
-package com.example.moviedbapp.extensions
+package com.example.moviedbapp.model.entities
 
 class Paged<T> (
     val page: Int,
