@@ -7,13 +7,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviedbapp.databinding.ItemMovieCategoryBinding
 import com.example.moviedbapp.model.entities.MovieCategoryData
-import com.example.moviedbapp.ui.OnMovieClickListener
-import com.example.moviedbapp.ui.OnShowMoreClickListener
+import com.example.moviedbapp.utils.Navigator
 
 class MovieCategoryAdapter(
     private val context: Context,
-    private var onMovieClick: OnMovieClickListener?,
-    private var onShowMoreClick: OnShowMoreClickListener?
+    private var onMovieClick: (Int) -> Unit,
+    private var onShowMoreClick: (Navigator.Companion.CategoryType) -> Unit
 ) : RecyclerView.Adapter<MovieCategoryAdapter.ViewHolder>() {
 
     private var movieCategoriesData: List<MovieCategoryData>? = null
@@ -57,8 +56,4 @@ class MovieCategoryAdapter(
 
     override fun getItemCount() = movieCategoriesData?.size ?: 0
 
-    fun removeClickListener() {
-        onMovieClick = null
-        onShowMoreClick = null
-    }
 }

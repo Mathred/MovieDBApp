@@ -11,10 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.moviedbapp.MovieDbApp
 import com.example.moviedbapp.R
 import com.example.moviedbapp.databinding.MainFragmentBinding
-import com.example.moviedbapp.utils.openMovie
-import com.example.moviedbapp.utils.showErrorLoadingDialog
 import com.example.moviedbapp.ui.rvadapter.MovieCategoryAdapter
-import com.example.moviedbapp.utils.Preferences
+import com.example.moviedbapp.utils.*
 import com.example.moviedbapp.viewmodel.AppState
 import com.example.moviedbapp.viewmodel.MainViewModel
 
@@ -28,16 +26,12 @@ class MainFragment : Fragment(R.layout.main_fragment) {
     private var _binding: MainFragmentBinding? = null
     private val binding get() = _binding!!
 
-    private val onMovieClick = object : OnMovieClickListener {
-        override fun onMovieClick(id: Int) {
-            openMovie(id)
-        }
+    private val onMovieClick: (Int) -> Unit = {
+        openMovie(it)
     }
 
-    private val onShowMoreClick = object : OnShowMoreClickListener {
-        override fun onShowMoreClick(category: String) {
-            //TODO("Not yet implemented")
-        }
+    private val onShowMoreClick: (Navigator.Companion.CategoryType) -> Unit = {
+        openCategoryFullList(it)
     }
 
     private val adapter by lazy {
@@ -97,8 +91,4 @@ class MainFragment : Fragment(R.layout.main_fragment) {
         _binding = null
     }
 
-    override fun onDestroy() {
-        adapter.removeClickListener()
-        super.onDestroy()
-    }
 }

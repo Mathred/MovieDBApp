@@ -1,5 +1,6 @@
 package com.example.moviedbapp.ui.rvadapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -10,12 +11,11 @@ import com.example.moviedbapp.databinding.ItemShowMoreCategoryBinding
 import com.example.moviedbapp.extensions.toImageUrl
 import com.example.moviedbapp.model.entities.MovieCategoryData
 import com.example.moviedbapp.model.entities.MovieListItem
-import com.example.moviedbapp.ui.OnMovieClickListener
-import com.example.moviedbapp.ui.OnShowMoreClickListener
+import com.example.moviedbapp.utils.Navigator
 
 class MovieListAdapter(
-    private val onMovieClick: OnMovieClickListener?,
-    private val onShowMoreClick: OnShowMoreClickListener?
+    private val onMovieClick: (Int) -> Unit,
+    private val onShowMoreClick: (Navigator.Companion.CategoryType) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var movieList: List<MovieListItem>? = null
@@ -30,8 +30,8 @@ class MovieListAdapter(
 
     inner class ShowMoreVH(binding: ItemShowMoreCategoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
-            val card = binding.cvMore
-        }
+        val card = binding.cvMore
+    }
 
     override fun getItemViewType(position: Int) =
         if (position < itemCount - 1) {
@@ -61,22 +61,18 @@ class MovieListAdapter(
                     (movieList?.getOrNull(position) as MovieListItem.MovieData).posterUrl?.let {
                         holder.image.load(it.toImageUrl())
                     }
-                    holder.adult.isVisible = (movieList?.getOrNull(position) as MovieListItem.MovieData).adult
+                    holder.adult.isVisible =
+                        (movieList?.getOrNull(position) as MovieListItem.MovieData).adult
                     holder.card.setOnClickListener {
-                        onMovieClick?.onMovieClick(
-                            (movieList?.getOrNull(position) as MovieListItem.MovieData).id
-                        )
+                        onMovieClick.invoke((movieList?.getOrNull(position) as MovieListItem.MovieData).id)
                     }
                 }
-            } else {
-                if (holder is ShowMoreVH) {
-                    if (movieList?.getOrNull(position) is MovieListItem.ShowMoreButton) {
-                        holder.card.setOnClickListener {
-                            onShowMoreClick?.onShowMoreClick(
-                                (movieList?.getOrNull(position) as MovieListItem.ShowMoreButton).category ?: ""
-                            )
-                        }
-                    }
+            }
+        } else {
+            if (holder is ShowMoreVH) {
+                if (movieList?.getOrNull(position) is MovieListItem.ShowMoreButton)
+                holder.card.setOnClickListener {
+                    onShowMoreClick.invoke((movieList?.getOrNull(position) as MovieListItem.ShowMoreButton).category)
                 }
             }
         }
@@ -85,13 +81,8 @@ class MovieListAdapter(
     override fun getItemCount() = movieList?.size ?: 0
 
     fun setData(movieCategoryData: MovieCategoryData) {
-        movieCategoryData.movieList?.let {
-            val list: MutableList<MovieListItem> = mutableListOf()
-            list.addAll(it)
-            list.add(MovieListItem.ShowMoreButton(movieCategoryData.category))
-            movieList = list
-        }
-        notifyItemRangeInserted(0,movieList?.size?:1 - 1)
+        movieList = movieCategoryData.movieList
+        notifyItemRangeInserted(0, movieList?.size ?: 1 - 1)
     }
 
     companion object {
