@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.core.view.GravityCompat
 import com.example.moviedbapp.R
 import com.example.moviedbapp.databinding.MainActivityBinding
+import com.example.moviedbapp.utils.openContacts
 import com.example.moviedbapp.utils.openHistory
 import com.example.moviedbapp.utils.openHome
 import com.example.moviedbapp.utils.openSettings
@@ -36,6 +37,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.home -> this@MainActivity.openHome()
                 R.id.settings -> this@MainActivity.openSettings()
                 R.id.history -> this@MainActivity.openHistory()
+                R.id.contacts -> this@MainActivity.openContacts()
             }
             menuItem.isChecked = true
             drawerLayout.closeDrawer(GravityCompat.START)
