@@ -7,13 +7,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.moviedbapp.databinding.ItemContactBinding
 import com.example.moviedbapp.model.entities.Contact
 
-class ContactsAdapter(private val makeCall: (String) -> Unit) : RecyclerView.Adapter<ContactsAdapter.ViewHolder>() {
+class ContactsAdapter(private val makeCall: (String) -> Unit, private val dialNumber: (String) -> Unit) : RecyclerView.Adapter<ContactsAdapter.ViewHolder>() {
 
     private var contactsList: List<Contact>? = null
 
     inner class ViewHolder(binding: ItemContactBinding): RecyclerView.ViewHolder(binding.root) {
         val name = binding.tvName
         val ivPhone = binding.ivPhone
+        val tvPhone = binding.tvPhone
+        val ivDialPad = binding.ivDial
+        val tvDialPad = binding.tvDial
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -26,9 +29,17 @@ class ContactsAdapter(private val makeCall: (String) -> Unit) : RecyclerView.Ada
             holder.name.text = it.name
             it.phone?.let { phone ->
                 if (phone.isNotBlank()) {
-                    holder.ivPhone.isVisible = true
-                    holder.ivPhone.setOnClickListener {
-                        makeCall.invoke(phone)
+                    with (holder) {
+                        ivPhone.isVisible = true
+                        tvPhone. isVisible = true
+                        ivPhone.setOnClickListener {
+                            makeCall.invoke(phone)
+                        }
+                        ivDialPad.isVisible = true
+                        tvDialPad. isVisible = true
+                        ivDialPad.setOnClickListener {
+                            dialNumber.invoke(phone)
+                        }
                     }
                 }
             }

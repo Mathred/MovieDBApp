@@ -17,6 +17,7 @@ import com.example.moviedbapp.databinding.FragmentContactsBinding
 import com.example.moviedbapp.model.entities.Contact
 import com.example.moviedbapp.ui.rvadapter.ContactsAdapter
 import com.example.moviedbapp.utils.callPhone
+import com.example.moviedbapp.utils.dialPhone
 import com.example.moviedbapp.utils.showAlertDialog
 
 class ContactsFragment : Fragment() {
@@ -29,9 +30,13 @@ class ContactsFragment : Fragment() {
     private val makeCall: (String) -> Unit = {
         callPhone(it)
     }
+    
+    private val dialNumber: (String) -> Unit = {
+        context?.dialPhone(it)
+    }
 
     private val adapter by lazy {
-        ContactsAdapter(makeCall)
+        ContactsAdapter(makeCall, dialNumber)
     }
 
     override fun onCreateView(

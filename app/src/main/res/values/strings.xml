@@ -26,4 +26,6 @@
     <string name="dialog_contact_access_denied_title">Доступ к контактам закрыт</string>
     <string name="dialog_contact_access_denied_message">Для импорта контактов необходимо предоставить доступ к контактам.\nПока этот экран останется пустым</string>
     <string name="toast_phone_failed">Не удалось совершить звонок</string>
+    <string name="item_contact_dial">dial</string>
+    <string name="item_contact_phone">call</string>
 </resources>
