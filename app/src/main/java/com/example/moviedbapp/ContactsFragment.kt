@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.moviedbapp.databinding.FragmentContactsBinding
@@ -51,41 +52,47 @@ class ContactsFragment : Fragment() {
         return binding.root
     }
 
-    private fun FragmentContactsBinding.initViews() {
-        rvContacts.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        rvContacts.adapter = adapter
-    }
-
     private fun checkPermissions() {
+        val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                contactList = getContacts()
+            } else {
+                context?.let {
+                    showAlertDialog(
+                        it,
+                        title = getString(R.string.dialog_contact_access_denied_title),
+                        message = getString(R.string.dialog_contact_access_denied_message)
+                    )
+                }
+            }
+        }
         context?.let {
             when {
-                ContextCompat.checkSelfPermission(
-                    it,
-                    Manifest.permission.READ_CONTACTS
-                ) == PackageManager.PERMISSION_GRANTED -> {
+                ContextCompat.checkSelfPermission(it, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED -> {
                     contactList = getContacts()
                 }
                 shouldShowRequestPermissionRationale(Manifest.permission.READ_CONTACTS) -> {
                     showAlertDialog(
                         context = it,
-                        style = R.style.MaterialAlertDialogPositiveRed,
                         title = getString(R.string.dialog_contact_access_title),
                         message = getString(R.string.dialog_contact_access_message),
                         negativeButtonText = getString(R.string.dialog_contact_access_negative_button),
                         positiveButtonText = getString(R.string.dialog_contact_access_positive_button),
-                        positiveButtonAction = { requestPermission() }
+                        positiveButtonAction = { requestPermissionLauncher.launch(Manifest.permission.READ_CONTACTS) }
                     )
                 }
                 else -> {
-                    requestPermission()
+                    requestPermissionLauncher.launch(Manifest.permission.READ_CONTACTS)
                 }
             }
+
         }
     }
 
-    private fun requestPermission() {
-        requestPermissions(arrayOf(Manifest.permission.READ_CONTACTS), REQUEST_CODE_CONTACTS)
+    private fun FragmentContactsBinding.initViews() {
+        rvContacts.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        rvContacts.adapter = adapter
     }
 
     override fun onRequestPermissionsResult(

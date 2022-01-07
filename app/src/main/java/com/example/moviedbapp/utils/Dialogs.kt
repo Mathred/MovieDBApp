@@ -4,13 +4,11 @@ import android.content.Context
 import android.content.DialogInterface
 import android.widget.Toast
 import androidx.annotation.StringRes
-import androidx.annotation.StyleRes
 import com.example.moviedbapp.R
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 fun showAlertDialog(
     context: Context,
-    @StyleRes style: Int = R.style.MaterialAlertDialog,
     title: String,
     message: String,
     neutralButtonText: String? = null,
@@ -20,7 +18,7 @@ fun showAlertDialog(
     positiveButtonText: String? = null,
     positiveButtonAction: (() -> Unit)? = null
 ) {
-    MaterialAlertDialogBuilder(context, style)
+    MaterialAlertDialogBuilder(context)
         .setTitle(title)
         .setMessage(message)
         .setNeutralButton(neutralButtonText, neutralButtonListener)
