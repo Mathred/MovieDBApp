@@ -16,6 +16,10 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file("apikey.properties").newDataInputStream())
+        manifestPlaceholders = [MAPS_API_KEY: "${properties.getProperty("GOOGLE_MAPS_API_KEY")}"]
     }
     buildTypes.each {
         Properties properties = new Properties()
@@ -78,5 +82,8 @@ dependencies {
     kapt 'androidx.room:room-compiler:2.4.0'
 
     //Paging3
-    implementation 'androidx.paging:paging-runtime:3.1.0'
+    implementation 'androidx.paging:paging-runtime-ktx:3.1.0'
+
+    //Google Maps
+    implementation 'com.google.android.gms:play-services-maps:18.0.2'
 }

@@ -1,12 +1,11 @@
 package com.example.moviedbapp.utils
 
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.example.moviedbapp.ContactsFragment
+import com.example.moviedbapp.LocationFragment
 import com.example.moviedbapp.R
 import com.example.moviedbapp.ui.*
-import com.example.moviedbapp.ui.CategoryFullListFragment.Companion.CATEGORY_TYPE
 
 class Navigator {
     companion object {
@@ -21,9 +20,6 @@ class Navigator {
 fun Fragment.openMovie(
     id: Int
 ) {
-    val bundle = bundleOf(
-        MovieDetailsFragment.MOVIE_ID to id
-    )
     this
         .activity
         ?.supportFragmentManager
@@ -34,15 +30,12 @@ fun Fragment.openMovie(
             R.anim.enter_from_right,
             R.anim.exit_to_right,
         )
-        ?.add(R.id.container, MovieDetailsFragment.newInstance(bundle))
+        ?.add(R.id.container, MovieDetailsFragment.newInstance(id))
         ?.addToBackStack("")
         ?.commit()
 }
 
 fun Fragment.openCategoryFullList(categoryType: Navigator.Companion.CategoryType) {
-    val bundle = bundleOf(
-        CATEGORY_TYPE to categoryType.ordinal
-    )
     this
         .activity
         ?.supportFragmentManager
@@ -53,7 +46,7 @@ fun Fragment.openCategoryFullList(categoryType: Navigator.Companion.CategoryType
             R.anim.enter_from_right,
             R.anim.exit_to_right,
         )
-        ?.add(R.id.container, CategoryFullListFragment.newInstance(bundle))
+        ?.add(R.id.container, CategoryFullListFragment.newInstance(categoryType.ordinal))
         ?.addToBackStack("")
         ?.commit()
 }
@@ -104,4 +97,20 @@ fun AppCompatActivity.openContacts() {
         .replace(R.id.container, ContactsFragment.newInstance())
         .addToBackStack("")
         .commit()
+}
+
+fun Fragment.openLocation(location: String) {
+    this
+        .activity
+        ?.supportFragmentManager
+        ?.beginTransaction()
+        ?.setCustomAnimations(
+            R.anim.enter_from_right,
+            R.anim.exit_to_right,
+            R.anim.enter_from_right,
+            R.anim.exit_to_right,
+        )
+        ?.add(R.id.container, LocationFragment.newInstance(location))
+        ?.addToBackStack("")
+        ?.commit()
 }

@@ -37,32 +37,32 @@ class MainViewModel : ViewModel() {
                     val topRatedMoviesList = movieDbApi.getTopRatedList().results.filter(filterAdultContent).filter(filterLongTitles).take(10).map {
                         it.toMovieListViewData()
                     }
-                    val ml: MutableList<MovieListItem> = mutableListOf()
-                    ml.addAll(topRatedMoviesList)
-                    ml.add(MovieListItem.ShowMoreButton(Navigator.Companion.CategoryType.TOP_RATED))
+                    val mlTopRated: MutableList<MovieListItem> = mutableListOf()
+                    mlTopRated.addAll(topRatedMoviesList)
+                    mlTopRated.add(MovieListItem.ShowMoreButton(Navigator.Companion.CategoryType.TOP_RATED))
                     val topRatedMoviesCategory = MovieCategoryData(
                         Navigator.Companion.CategoryType.TOP_RATED.displayedName,
-                        ml.toList()
+                        mlTopRated.toList()
                     )
                     val popularMovieList = movieDbApi.getPopularMovieList().results.filter(filterAdultContent).filter(filterLongTitles).take(10).map {
                         it.toMovieListViewData()
                     }
-                    ml.clear()
-                    ml.addAll(popularMovieList)
-                    ml.add(MovieListItem.ShowMoreButton(Navigator.Companion.CategoryType.POPULAR))
+                    val mlTopPopular: MutableList<MovieListItem> = mutableListOf()
+                    mlTopPopular.addAll(popularMovieList)
+                    mlTopPopular.add(MovieListItem.ShowMoreButton(Navigator.Companion.CategoryType.POPULAR))
                     val popularCategory = MovieCategoryData(
                         Navigator.Companion.CategoryType.POPULAR.displayedName,
-                        ml
+                        mlTopPopular
                     )
                     val upcomingMovieList = movieDbApi.getUpcomingMovieList().results.filter(filterAdultContent).filter(filterLongTitles).take(10).map {
                         it.toMovieListViewData()
                     }
-                    ml.clear()
-                    ml.addAll(upcomingMovieList)
-                    ml.add(MovieListItem.ShowMoreButton(Navigator.Companion.CategoryType.UPCOMING))
+                    val mlTopUpcoming: MutableList<MovieListItem> = mutableListOf()
+                    mlTopUpcoming.addAll(upcomingMovieList)
+                    mlTopUpcoming.add(MovieListItem.ShowMoreButton(Navigator.Companion.CategoryType.UPCOMING))
                     val upcomingCategory = MovieCategoryData(
                         Navigator.Companion.CategoryType.UPCOMING.displayedName,
-                        ml
+                        mlTopUpcoming
                     )
                     _liveData.postValue(
                         AppState.Success(

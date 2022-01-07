@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.moviedbapp.MovieDbApp.Companion.getMovieDetailsDao
 import com.example.moviedbapp.R
+import com.example.moviedbapp.extensions.toDate
 import com.example.moviedbapp.model.entities.MovieDetailsViewData
 import com.example.moviedbapp.model.repo.LocalRepo
 import com.example.moviedbapp.model.repo.LocalRepoImpl
@@ -42,9 +43,11 @@ class MovieDetailsViewModel(
                             MovieDetailsViewData(
                                 id = movieDetails.id,
                                 title = movieDetails.title,
+                                originalTitle = movieDetails.original_title,
                                 posterPath = movieDetails.poster_path,
                                 productionCompanies = movieDetails.production_companies,
-                                releaseDate = movieDetails.release_date,
+                                productionCountries = movieDetails.production_countries,
+                                releaseDate = movieDetails.release_date.toDate(),
                                 note = initNote
                             )
                         )

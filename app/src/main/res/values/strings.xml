@@ -28,4 +28,11 @@
     <string name="toast_phone_failed">Не удалось совершить звонок</string>
     <string name="item_contact_dial">dial</string>
     <string name="item_contact_phone">call</string>
+    <string name="show_map">Смотреть на карте</string>
+    <string name="dialog_location_access_denied_title">Доступ к геопозиции закрыт</string>
+    <string name="dialog_location_access_denied_message">Для отображения вашей геопозиции необходимо предоставить доступ к геопопзиции</string>
+    <string name="dialog_location_access_title">Доступ к геопопзиции</string>
+    <string name="dialog_location_access_message">Для отображения вашей геопозиции необходимо предоставить доступ к геопопзиции</string>
+    <string name="dialog_location_access_positive_button">Предоставить доступ</string>
+    <string name="dialog_location_access_negative_button">Отклонить</string>
 </resources>
