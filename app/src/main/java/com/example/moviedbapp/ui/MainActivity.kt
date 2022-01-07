@@ -2,13 +2,11 @@ package com.example.moviedbapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.core.view.GravityCompat
 import com.example.moviedbapp.R
 import com.example.moviedbapp.databinding.MainActivityBinding
-import com.example.moviedbapp.utils.openContacts
-import com.example.moviedbapp.utils.openHistory
-import com.example.moviedbapp.utils.openHome
-import com.example.moviedbapp.utils.openSettings
+import com.example.moviedbapp.utils.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,6 +23,13 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.container, MainFragment.newInstance())
                 .commitNow()
+        }
+        val extras = intent.extras
+        if (extras?.containsKey(Navigator.START_ACTION) == true && extras.containsKey(Navigator.MOVIE_ID)) {
+            extras.getString(Navigator.MOVIE_ID)?.toInt()?.let {
+                Log.d(TAG, "openMovie($it)")
+                openMovie(it)
+            }
         }
     }
 
@@ -43,5 +48,9 @@ class MainActivity : AppCompatActivity() {
             drawerLayout.closeDrawer(GravityCompat.START)
             true
         }
+    }
+
+    companion object {
+        const val TAG = "MainActivity"
     }
 }

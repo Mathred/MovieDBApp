@@ -14,6 +14,11 @@ class Navigator {
             POPULAR("Popular"),
             UPCOMING("Upcoming")
         }
+        const val START_ACTION = "START_ACTION"
+        enum class StartAction {
+            OPEN_MOVIE
+        }
+        const val MOVIE_ID = "MOVIE_ID"
     }
 }
 
@@ -33,6 +38,20 @@ fun Fragment.openMovie(
         ?.add(R.id.container, MovieDetailsFragment.newInstance(id))
         ?.addToBackStack("")
         ?.commit()
+}
+
+fun AppCompatActivity.openMovie(
+    id: Int
+) {
+    this.supportFragmentManager
+        .beginTransaction()
+        .setCustomAnimations(
+            R.anim.enter_from_right,
+            R.anim.exit_to_left,
+        )
+        .replace(R.id.container, MovieDetailsFragment.newInstance(id))
+        .addToBackStack("")
+        .commit()
 }
 
 fun Fragment.openCategoryFullList(categoryType: Navigator.Companion.CategoryType) {

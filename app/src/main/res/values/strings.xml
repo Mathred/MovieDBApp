@@ -35,4 +35,12 @@
     <string name="dialog_location_access_message">Для отображения вашей геопозиции необходимо предоставить доступ к геопопзиции</string>
     <string name="dialog_location_access_positive_button">Предоставить доступ</string>
     <string name="dialog_location_access_negative_button">Отклонить</string>
+    <string name="default_fcm_title">FCM Message</string>
+    <string name="default_notification_channel_id">fcm_default_channel</string>
+    <string name="default_notification_channel_name">FCM Channel</string>
+    <string name="msg_token_fmt" translatable="false">FCM registration Token: %s</string>
+    <string name="geofence_not_available">    Geofence service is not available now. Go to Settings>Location>Mode and choose High accuracy.</string>
+    <string name="geofence_too_many_geofences">Your app has registered too many geofences.</string>
+    <string name="geofence_too_many_pending_intents">You have provided too many PendingIntents to the addGeofences() call.</string>
+    <string name="geofence_unknown_error">Unknown error: the Geofence service is not available now.</string>
 </resources>

@@ -6,17 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import coil.load
-import com.example.moviedbapp.R
 import com.example.moviedbapp.databinding.FragmentMovieHistoryBinding
-import com.example.moviedbapp.extensions.toImageUrl
-import com.example.moviedbapp.extensions.toSvgUrl
 import com.example.moviedbapp.ui.rvadapter.MovieHistoryAdapter
 import com.example.moviedbapp.utils.showErrorLoadingDialog
-import com.example.moviedbapp.viewmodel.AppState
+import com.example.moviedbapp.viewmodel.LoadState
 import com.example.moviedbapp.viewmodel.MovieHistoryViewModel
 
 class MovieHistoryFragment : Fragment() {
@@ -63,12 +57,12 @@ class MovieHistoryFragment : Fragment() {
     private fun initObservers() {
         viewModel.liveData.observe(viewLifecycleOwner) {
             when (it) {
-                is AppState.Loading -> {
+                is LoadState.Loading -> {
                 }
-                is AppState.Error -> {
+                is LoadState.Error -> {
                     showErrorLoadingDialog(requireContext(), it.error)
                 }
-                is AppState.Success -> {
+                is LoadState.Success -> {
                     adapter.setData(it.data)
                 }
             }

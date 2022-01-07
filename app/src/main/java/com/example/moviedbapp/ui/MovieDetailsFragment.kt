@@ -21,7 +21,7 @@ import com.example.moviedbapp.extensions.toImageUrl
 import com.example.moviedbapp.extensions.toSvgUrl
 import com.example.moviedbapp.utils.hideKeyboard
 import com.example.moviedbapp.utils.openLocation
-import com.example.moviedbapp.viewmodel.AppState
+import com.example.moviedbapp.viewmodel.LoadState
 import com.example.moviedbapp.viewmodel.MovieDetailsViewModel
 
 class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
@@ -52,14 +52,14 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
     private fun FragmentMovieDetailsBinding.initObservers() {
         viewModel.liveData.observe(viewLifecycleOwner) { appState ->
             when (appState) {
-                is AppState.Loading -> {
+                is LoadState.Loading -> {
                     progress.isVisible = true
                 }
-                is AppState.Error -> {
+                is LoadState.Error -> {
                     progress.isVisible = false
                     showErrorLoadingDialog(requireContext(), appState.error)
                 }
-                is AppState.Success -> {
+                is LoadState.Success -> {
                     progress.isVisible = false
                     ivMovie.load(appState.data.posterPath?.toImageUrl())
                     tvTitle.text = appState.data.title

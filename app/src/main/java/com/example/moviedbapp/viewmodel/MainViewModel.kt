@@ -14,8 +14,8 @@ import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
 
-    val liveData: LiveData<AppState<List<MovieCategoryData>>> get() = _liveData
-    private var _liveData = MutableLiveData<AppState<List<MovieCategoryData>>>()
+    val liveData: LiveData<LoadState<List<MovieCategoryData>>> get() = _liveData
+    private var _liveData = MutableLiveData<LoadState<List<MovieCategoryData>>>()
 
     fun getData(movieDbApi: MovieDbApi?, showAdultContent: Boolean, showLongTitles: Boolean) {
         movieDbApi?.let {
@@ -32,7 +32,7 @@ class MainViewModel : ViewModel() {
             }
 
             viewModelScope.launch(Dispatchers.IO) {
-                _liveData.postValue(AppState.Loading)
+                _liveData.postValue(LoadState.Loading)
                 runCatching {
                     val topRatedMoviesList = movieDbApi.getTopRatedList().results.filter(filterAdultContent).filter(filterLongTitles).take(10).map {
                         it.toMovieListViewData()
@@ -65,7 +65,7 @@ class MainViewModel : ViewModel() {
                         mlTopUpcoming
                     )
                     _liveData.postValue(
-                        AppState.Success(
+                        LoadState.Success(
                             listOf(
                                 topRatedMoviesCategory,
                                 popularCategory,
@@ -74,7 +74,7 @@ class MainViewModel : ViewModel() {
                         )
                     )
                 }.onFailure {
-                    _liveData.postValue(AppState.Error(it))
+                    _liveData.postValue(LoadState.Error(it))
                 }
             }
         }
