@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="MaterialAlertDialogPositiveRed" parent="MaterialAlertDialog">
+        <item name="buttonBarPositiveButtonStyle">@style/MaterialAlertDialog.Button.Red</item>
+    </style>
+
+    <style name="MaterialAlertDialog.Button.Red" parent="MaterialAlertDialog.Button">
+        <item name="android:textColor">@android:color/holo_red_dark</item>
+    </style>
+
+    <style name="MaterialAlertDialog" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+        <item name="colorPrimary">?colorPrimary</item>
+        <item name="alertDialogStyle">@style/MaterialAlertDialog.AlertStyle</item>
+        <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.Title.Text</item>
+        <item name="materialAlertDialogBodyTextStyle">@style/MaterialAlertDialog.Body.Text</item>
+        <item name="buttonBarPositiveButtonStyle">@style/MaterialAlertDialog.Button</item>
+        <item name="buttonBarNegativeButtonStyle">@style/MaterialAlertDialog.Button</item>
+        <item name="buttonBarNeutralButtonStyle">@style/MaterialAlertDialog.Button</item>
+    </style>
+
+    <style name="MaterialAlertDialog.AlertStyle" parent="MaterialAlertDialog.MaterialComponents">
+        <item name="shapeAppearance">@style/ShapeAppearance.Rounded12</item>
+    </style>
+
+    <style name="ShapeAppearance.Rounded12" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
+    </style>
+
+    <style name="MaterialAlertDialog.Title.Text" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">20sp</item>
+        <item name="fontWeight">500</item>
+        <item name="lineHeight">24sp</item>
+        <item name="android:maxLines">5</item>
+        <item name="android:singleLine">false</item>
+    </style>
+
+    <style name="MaterialAlertDialog.Body.Text" parent="HeadLineRegular">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="HeadLineRegular">
+        <item name="fontFamily">"sans-serif"</item>
+        <item name="android:textStyle">normal</item>
+        <item name="fontWeight">400</item>
+        <item name="android:textSize">16sp</item>
+        <item name="lineHeight">20sp</item>
+        <item name="android:textColor">?colorPrimaryDark</item>
+    </style>
+
+    <style name="MaterialAlertDialog.Button" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="materialThemeOverlay">@style/MaterialAlertDialog.Button.Text</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="MaterialAlertDialog.Button.Text" parent="RobotoMediumText15" >
+        <item name="android:letterSpacing">0.0</item>
+    </style>
+
+    <style name="RobotoMediumText15" parent="RobotoMediumText">
+        <item name="android:textSize">15sp</item>
+        <item name="lineHeight">20sp</item>
+    </style>
+
+    <style name="RobotoMediumText">
+        <item name="fontFamily">sans-serif-medium</item>
+    </style>
+
+</resources>
