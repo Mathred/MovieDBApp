@@ -16,3 +16,7 @@
 .cxx
 local.properties
 apikey.properties
+/app/free/release/app-free-release.aab
+/private_key.pepk
+/app/keystore.jks
+/keystore.properties
