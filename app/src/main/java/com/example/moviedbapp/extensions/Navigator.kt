@@ -16,6 +16,12 @@ fun Fragment.openMovie(
         .activity
         ?.supportFragmentManager
         ?.beginTransaction()
+        ?.setCustomAnimations(
+            R.anim.enter_from_right,
+            R.anim.exit_to_right,
+            R.anim.enter_from_right,
+            R.anim.exit_to_right,
+        )
         ?.add(R.id.container, MovieDetailsFragment.newInstance(bundle))
         ?.addToBackStack("")
         ?.commit()

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.moviedbapp.MovieDbApp
 import com.example.moviedbapp.R
 import com.example.moviedbapp.databinding.MainFragmentBinding
 import com.example.moviedbapp.extensions.openMovie
@@ -55,7 +56,7 @@ class MainFragment : Fragment(R.layout.main_fragment) {
         return binding.root
     }
 
-    private fun MainFragmentBinding.initVm() {
+    private fun initVm() {
         viewModel = ViewModelProvider(this@MainFragment)[MainViewModel::class.java]
     }
 
@@ -73,7 +74,7 @@ class MainFragment : Fragment(R.layout.main_fragment) {
                 }
                 is AppState.Error -> {
                     progress.isVisible = false
-                    showErrorLoadingDialog(requireContext())
+                    showErrorLoadingDialog(requireContext(), it.error)
                 }
                 is AppState.Success -> {
                     progress.isVisible = false
@@ -83,8 +84,8 @@ class MainFragment : Fragment(R.layout.main_fragment) {
         }
     }
 
-    private fun MainFragmentBinding.requestData() {
-        viewModel.getData()
+    private fun requestData() {
+        viewModel.getData((activity?.application as? MovieDbApp)?.movieDbApi)
     }
 
     override fun onDestroyView() {
