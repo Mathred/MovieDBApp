@@ -5,10 +5,10 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clickable="true"
-    android:focusableInTouchMode="true"
     android:background="@android:color/white"
-    android:focusable="true">
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_movie"
@@ -25,29 +25,93 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
         android:layout_marginTop="8dp"
+        android:textAppearance="?textAppearanceBody1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/iv_movie"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Название фильма" />
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_original_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textAppearance="?textAppearanceBody2"
+        app:layout_constraintEnd_toEndOf="@id/tv_title"
+        app:layout_constraintStart_toStartOf="@id/tv_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        tools:text="Оригинальное название фильма" />
+
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_year"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/iv_movie"
-        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        android:layout_marginTop="4dp"
+        android:textAppearance="?textAppearanceCaption"
+        app:layout_constraintEnd_toEndOf="@id/tv_title"
+        app:layout_constraintStart_toStartOf="@id/tv_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_original_title"
         tools:text="1990 г." />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_company_logo"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="@id/tv_year"
-        app:layout_constraintTop_toBottomOf="@id/tv_year" />
+        app:layout_constraintTop_toBottomOf="@id/tv_year"
+        tools:background="@android:color/holo_blue_light" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_company_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:textAppearance="?textAppearanceCaption"
+        app:layout_constraintStart_toEndOf="@id/iv_company_logo"
+        app:layout_constraintTop_toTopOf="@id/iv_company_logo"
+        tools:text="Компания" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_country"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textAppearance="?textAppearanceBody2"
+        app:layout_constraintEnd_toEndOf="@id/tv_title"
+        app:layout_constraintStart_toStartOf="@id/tv_title"
+        app:layout_constraintTop_toBottomOf="@id/iv_company_logo"
+        tools:text="Страна производства" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_show_map"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingVertical="4dp"
+        android:text="@string/show_map"
+        android:textAppearance="?android:textAppearanceButton"
+        android:textColor="@android:color/holo_blue_dark"
+        app:layout_constraintStart_toStartOf="@id/tv_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_country" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:src="@drawable/ic_baseline_arrow_forward_24"
+        android:tint="@android:color/holo_blue_dark"
+        app:layout_constraintBottom_toBottomOf="@id/tv_show_map"
+        app:layout_constraintStart_toEndOf="@id/tv_show_map"
+        app:layout_constraintTop_toTopOf="@id/tv_show_map" />
+
+    <View
+        android:id="@+id/v_show_map"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/tv_show_map"
+        app:layout_constraintEnd_toEndOf="@id/iv_arrow"
+        app:layout_constraintStart_toStartOf="@id/tv_show_map"
+        app:layout_constraintTop_toTopOf="@id/tv_show_map" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_note"
@@ -73,28 +137,28 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="4dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="4dp"
         android:background="?colorPrimarySurface"
         android:text="@string/btn_save_note"
         android:textColor="?colorOnPrimarySurface"
-        app:layout_constraintTop_toBottomOf="@id/til_note"
+        app:layout_constraintEnd_toStartOf="@id/btn_reset"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btn_reset"/>
+        app:layout_constraintTop_toBottomOf="@id/til_note" />
 
     <androidx.appcompat.widget.AppCompatButton
-    android:id="@+id/btn_reset"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_marginEnd="16dp"
-    android:layout_marginStart="4dp"
-    android:layout_marginTop="8dp"
-    android:background="?colorPrimarySurface"
-    android:text="@string/btn_reset_note"
-    android:textColor="?colorOnPrimarySurface"
-    app:layout_constraintTop_toBottomOf="@id/til_note"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toEndOf="@id/btn_save_note"/>
+        android:id="@+id/btn_reset"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="?colorPrimarySurface"
+        android:text="@string/btn_reset_note"
+        android:textColor="?colorOnPrimarySurface"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_save_note"
+        app:layout_constraintTop_toBottomOf="@id/til_note" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_delete_note"
@@ -103,12 +167,12 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
         android:background="#FF888888"
+        android:clickable="false"
         android:text="@string/btn_delete_note"
         android:textColor="?colorOnPrimarySurface"
-        android:clickable="false"
-        app:layout_constraintTop_toBottomOf="@id/btn_save_note"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/btn_save_note"/>
+        app:layout_constraintStart_toEndOf="@id/btn_save_note"
+        app:layout_constraintTop_toBottomOf="@id/btn_save_note" />
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/progress"

@@ -13,7 +13,7 @@ import com.example.moviedbapp.R
 import com.example.moviedbapp.databinding.MainFragmentBinding
 import com.example.moviedbapp.ui.rvadapter.MovieCategoryAdapter
 import com.example.moviedbapp.utils.*
-import com.example.moviedbapp.viewmodel.AppState
+import com.example.moviedbapp.viewmodel.LoadState
 import com.example.moviedbapp.viewmodel.MainViewModel
 
 class MainFragment : Fragment(R.layout.main_fragment) {
@@ -67,14 +67,14 @@ class MainFragment : Fragment(R.layout.main_fragment) {
     private fun MainFragmentBinding.initObservers() {
         viewModel.liveData.observe(viewLifecycleOwner) {
             when (it) {
-                is AppState.Loading -> {
+                is LoadState.Loading -> {
                     progress.isVisible = true
                 }
-                is AppState.Error -> {
+                is LoadState.Error -> {
                     progress.isVisible = false
                     showErrorLoadingDialog(requireContext(), it.error)
                 }
-                is AppState.Success -> {
+                is LoadState.Success -> {
                     progress.isVisible = false
                     adapter.setData(it.data)
                 }

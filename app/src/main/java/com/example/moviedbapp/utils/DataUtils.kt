@@ -5,7 +5,7 @@ import com.example.moviedbapp.model.room.entities.MovieHistoryEntity
 import com.example.moviedbapp.model.room.entities.MovieNoteEntity
 
 fun MovieHistoryEntity.toMovieDetailsDto() =
-    MovieDetailsDTO(id, title, original_title, poster_path, null, release_date)
+    MovieDetailsDTO(id, title, original_title, poster_path, listOf(), listOf(), "")
 
 fun MovieDetailsDTO.toMovieHistoryEntity() =
     MovieHistoryEntity(id, title, original_title, poster_path, release_date)

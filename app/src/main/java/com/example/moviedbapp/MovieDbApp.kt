@@ -1,6 +1,8 @@
 package com.example.moviedbapp
 
 import android.app.Application
+import android.util.Log
+import android.widget.Toast
 import androidx.room.Room
 import coil.ImageLoader
 import coil.ImageLoaderFactory
@@ -9,6 +11,8 @@ import coil.util.DebugLogger
 import com.example.moviedbapp.model.repo.MovieDbApi
 import com.example.moviedbapp.model.room.MovieDb
 import com.example.moviedbapp.model.room.dao.MovieDetailsDao
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.ktx.messaging
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -24,6 +28,18 @@ class MovieDbApp : Application(), ImageLoaderFactory {
         appInstance = this
         configureOkHttp()
         configureRetrofit()
+
+        Firebase.messaging.token.addOnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                return@addOnCompleteListener
+            }
+
+            val token = task.result
+            val msg = getString(R.string.msg_token_fmt, token)
+            Log.d(TAG, msg)
+            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun configureOkHttp() {
@@ -58,6 +74,7 @@ class MovieDbApp : Application(), ImageLoaderFactory {
     }
 
     companion object {
+        private const val TAG = "MovieDbApp"
         const val BASE_URL = "https://api.themoviedb.org/3/"
         const val IMAGE_SECURE_URL = "https://image.tmdb.org/t/p/"
         const val POSTER_SIZE_URL = "w500"

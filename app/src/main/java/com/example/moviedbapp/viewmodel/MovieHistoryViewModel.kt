@@ -14,12 +14,12 @@ class MovieHistoryViewModel(
     private val localRepo: LocalRepoImpl = LocalRepoImpl(getMovieDetailsDao())
 ) : ViewModel() {
 
-    val liveData: LiveData<AppState<List<MovieDetailsDTO>>> get() = _liveData
-    private var _liveData = MutableLiveData<AppState<List<MovieDetailsDTO>>>()
+    val liveData: LiveData<LoadState<List<MovieDetailsDTO>>> get() = _liveData
+    private var _liveData = MutableLiveData<LoadState<List<MovieDetailsDTO>>>()
 
     fun requestData() {
         viewModelScope.launch(Dispatchers.IO) {
-            _liveData.postValue(AppState.Success(localRepo.getAllMovieDetailsHistory()))
+            _liveData.postValue(LoadState.Success(localRepo.getAllMovieDetailsHistory()))
         }
     }
 

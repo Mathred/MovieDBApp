@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
@@ -14,11 +15,13 @@ import coil.load
 import com.example.moviedbapp.MovieDbApp
 import com.example.moviedbapp.R
 import com.example.moviedbapp.databinding.FragmentMovieDetailsBinding
+import com.example.moviedbapp.extensions.getDateYear
 import com.example.moviedbapp.utils.showErrorLoadingDialog
 import com.example.moviedbapp.extensions.toImageUrl
 import com.example.moviedbapp.extensions.toSvgUrl
 import com.example.moviedbapp.utils.hideKeyboard
-import com.example.moviedbapp.viewmodel.AppState
+import com.example.moviedbapp.utils.openLocation
+import com.example.moviedbapp.viewmodel.LoadState
 import com.example.moviedbapp.viewmodel.MovieDetailsViewModel
 
 class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
@@ -49,20 +52,32 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
     private fun FragmentMovieDetailsBinding.initObservers() {
         viewModel.liveData.observe(viewLifecycleOwner) { appState ->
             when (appState) {
-                is AppState.Loading -> {
+                is LoadState.Loading -> {
                     progress.isVisible = true
                 }
-                is AppState.Error -> {
+                is LoadState.Error -> {
                     progress.isVisible = false
                     showErrorLoadingDialog(requireContext(), appState.error)
                 }
-                is AppState.Success -> {
+                is LoadState.Success -> {
                     progress.isVisible = false
-                    tvTitle.text = appState.data.title
                     ivMovie.load(appState.data.posterPath?.toImageUrl())
-                    appState.data.productionCompanies?.getOrNull(0)?.logo_path?.let { logoPath ->
+                    tvTitle.text = appState.data.title
+                    tvOriginalTitle.text = appState.data.originalTitle
+                    appState.data.releaseDate?.let {
+                        tvYear.text = it.getDateYear()
+                    }
+                    appState.data.productionCompanies[0].logo_path?.let { logoPath ->
                         ivCompanyLogo.load(logoPath.toSvgUrl())
                     }
+                    tvCompanyName.text = appState.data.productionCompanies[0].name
+
+                    val countryName = appState.data.productionCountries[0].name
+                    tvCountry.text = countryName
+                    vShowMap.setOnClickListener {
+                        openLocation(countryName)
+                    }
+
                     appState.data.note?.let { note ->
                         etNote.setText(note)
                     }
@@ -126,10 +141,8 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
     companion object {
 
         const val MOVIE_ID = "MOVIE_ID"
-        fun newInstance(bundle: Bundle): MovieDetailsFragment {
-            val fragment = MovieDetailsFragment()
-            fragment.arguments = bundle
-            return fragment
+        fun newInstance(movieId: Int) = MovieDetailsFragment().apply {
+            arguments = bundleOf(MOVIE_ID to movieId)
         }
     }
 

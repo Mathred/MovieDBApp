@@ -9,7 +9,8 @@ data class MovieDetailsDTO(
     val title: String,
     val original_title: String,
     val poster_path: String?,
-    val production_companies: List<ProductionCompanyBriefDTO>?,
+    val production_companies: List<ProductionCompanyBriefDTO>,
+    val production_countries: List<ProductionCountryDTO>,
     val release_date: String,
 ) : Parcelable
 
@@ -19,3 +20,9 @@ data class ProductionCompanyBriefDTO(
     val id: Int,
     val logo_path: String?
 ) : Parcelable
+
+@Parcelize
+data class ProductionCountryDTO(
+    val iso_3166_1: String,
+    val name: String
+): Parcelable

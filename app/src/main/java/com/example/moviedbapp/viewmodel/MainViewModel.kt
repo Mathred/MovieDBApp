@@ -14,8 +14,8 @@ import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
 
-    val liveData: LiveData<AppState<List<MovieCategoryData>>> get() = _liveData
-    private var _liveData = MutableLiveData<AppState<List<MovieCategoryData>>>()
+    val liveData: LiveData<LoadState<List<MovieCategoryData>>> get() = _liveData
+    private var _liveData = MutableLiveData<LoadState<List<MovieCategoryData>>>()
 
     fun getData(movieDbApi: MovieDbApi?, showAdultContent: Boolean, showLongTitles: Boolean) {
         movieDbApi?.let {
@@ -32,40 +32,40 @@ class MainViewModel : ViewModel() {
             }
 
             viewModelScope.launch(Dispatchers.IO) {
-                _liveData.postValue(AppState.Loading)
+                _liveData.postValue(LoadState.Loading)
                 runCatching {
                     val topRatedMoviesList = movieDbApi.getTopRatedList().results.filter(filterAdultContent).filter(filterLongTitles).take(10).map {
                         it.toMovieListViewData()
                     }
-                    val ml: MutableList<MovieListItem> = mutableListOf()
-                    ml.addAll(topRatedMoviesList)
-                    ml.add(MovieListItem.ShowMoreButton(Navigator.Companion.CategoryType.TOP_RATED))
+                    val mlTopRated: MutableList<MovieListItem> = mutableListOf()
+                    mlTopRated.addAll(topRatedMoviesList)
+                    mlTopRated.add(MovieListItem.ShowMoreButton(Navigator.Companion.CategoryType.TOP_RATED))
                     val topRatedMoviesCategory = MovieCategoryData(
                         Navigator.Companion.CategoryType.TOP_RATED.displayedName,
-                        ml.toList()
+                        mlTopRated.toList()
                     )
                     val popularMovieList = movieDbApi.getPopularMovieList().results.filter(filterAdultContent).filter(filterLongTitles).take(10).map {
                         it.toMovieListViewData()
                     }
-                    ml.clear()
-                    ml.addAll(popularMovieList)
-                    ml.add(MovieListItem.ShowMoreButton(Navigator.Companion.CategoryType.POPULAR))
+                    val mlTopPopular: MutableList<MovieListItem> = mutableListOf()
+                    mlTopPopular.addAll(popularMovieList)
+                    mlTopPopular.add(MovieListItem.ShowMoreButton(Navigator.Companion.CategoryType.POPULAR))
                     val popularCategory = MovieCategoryData(
                         Navigator.Companion.CategoryType.POPULAR.displayedName,
-                        ml
+                        mlTopPopular
                     )
                     val upcomingMovieList = movieDbApi.getUpcomingMovieList().results.filter(filterAdultContent).filter(filterLongTitles).take(10).map {
                         it.toMovieListViewData()
                     }
-                    ml.clear()
-                    ml.addAll(upcomingMovieList)
-                    ml.add(MovieListItem.ShowMoreButton(Navigator.Companion.CategoryType.UPCOMING))
+                    val mlTopUpcoming: MutableList<MovieListItem> = mutableListOf()
+                    mlTopUpcoming.addAll(upcomingMovieList)
+                    mlTopUpcoming.add(MovieListItem.ShowMoreButton(Navigator.Companion.CategoryType.UPCOMING))
                     val upcomingCategory = MovieCategoryData(
                         Navigator.Companion.CategoryType.UPCOMING.displayedName,
-                        ml
+                        mlTopUpcoming
                     )
                     _liveData.postValue(
-                        AppState.Success(
+                        LoadState.Success(
                             listOf(
                                 topRatedMoviesCategory,
                                 popularCategory,
@@ -74,7 +74,7 @@ class MainViewModel : ViewModel() {
                         )
                     )
                 }.onFailure {
-                    _liveData.postValue(AppState.Error(it))
+                    _liveData.postValue(LoadState.Error(it))
                 }
             }
         }
