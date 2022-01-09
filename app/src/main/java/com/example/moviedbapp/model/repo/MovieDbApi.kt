@@ -1,8 +1,7 @@
 package com.example.moviedbapp.model.repo
 
 import com.example.moviedbapp.BuildConfig
-import com.example.moviedbapp.extensions.Paged
-import com.example.moviedbapp.model.entities.ActorData
+import com.example.moviedbapp.model.entities.Paged
 import com.example.moviedbapp.model.entities.MovieBriefDTO
 import com.example.moviedbapp.model.entities.MovieDetailsDTO
 import retrofit2.http.GET

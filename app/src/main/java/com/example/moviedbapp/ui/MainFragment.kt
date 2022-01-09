@@ -11,9 +11,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.moviedbapp.MovieDbApp
 import com.example.moviedbapp.R
 import com.example.moviedbapp.databinding.MainFragmentBinding
-import com.example.moviedbapp.extensions.openMovie
-import com.example.moviedbapp.extensions.showErrorLoadingDialog
+import com.example.moviedbapp.utils.openMovie
+import com.example.moviedbapp.utils.showErrorLoadingDialog
 import com.example.moviedbapp.ui.rvadapter.MovieCategoryAdapter
+import com.example.moviedbapp.utils.Preferences
 import com.example.moviedbapp.viewmodel.AppState
 import com.example.moviedbapp.viewmodel.MainViewModel
 
@@ -51,7 +52,10 @@ class MainFragment : Fragment(R.layout.main_fragment) {
             initVm()
             initViews()
             initObservers()
-            requestData()
+            requestData(
+                this@MainFragment.context?.let { Preferences(it) }?.getAdultContentEnabledOption() ?: false,
+                this@MainFragment.context?.let { Preferences(it) }?.getLongTitlesEnabledOption() ?: true
+            )
         }
         return binding.root
     }
@@ -84,8 +88,8 @@ class MainFragment : Fragment(R.layout.main_fragment) {
         }
     }
 
-    private fun requestData() {
-        viewModel.getData((activity?.application as? MovieDbApp)?.movieDbApi)
+    private fun requestData(showAdultContent: Boolean, showLongTitles: Boolean) {
+        viewModel.getData((activity?.application as? MovieDbApp)?.movieDbApi, showAdultContent, showLongTitles)
     }
 
     override fun onDestroyView() {

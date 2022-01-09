@@ -2,6 +2,7 @@ package com.example.moviedbapp.ui.rvadapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.moviedbapp.databinding.ItemMovieBinding
@@ -24,6 +25,7 @@ class MovieListAdapter(
         val name = binding.tvTitle
         val image = binding.ivMovie
         val card = binding.cvMovie
+        val adult = binding.tvAdult
     }
 
     inner class ShowMoreVH(binding: ItemShowMoreCategoryBinding) :
@@ -59,6 +61,7 @@ class MovieListAdapter(
                     (movieList?.getOrNull(position) as MovieListItem.MovieData).posterUrl?.let {
                         holder.image.load(it.toImageUrl())
                     }
+                    holder.adult.isVisible = (movieList?.getOrNull(position) as MovieListItem.MovieData).adult
                     holder.card.setOnClickListener {
                         onMovieClick?.onMovieClick(
                             (movieList?.getOrNull(position) as MovieListItem.MovieData).id
