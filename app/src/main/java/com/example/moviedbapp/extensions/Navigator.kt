@@ -10,7 +10,7 @@ fun Fragment.openMovie(
     id: Int
 ) {
     val bundle = bundleOf(
-        MovieDetailsFragment.ID to id
+        MovieDetailsFragment.MOVIE_ID to id
     )
     this
         .activity
